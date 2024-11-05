@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1098428717556",
+    "firebase_url": "https://digital-health-app-a7157-default-rtdb.firebaseio.com",
+    "project_id": "digital-health-app-a7157",
+    "storage_bucket": "digital-health-app-a7157.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098428717556:android:a0fed38356efbd948041a1",
+        "android_client_info": {
+          "package_name": "com.digitalhealth.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt8tOAndUQ4jM232wqz0kODjqVU6RS11E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDK369Ue--ImtLqxdT8hQQvlfqakI-HpJM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1098428717556</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.digitalhealth.app</string>
+	<key>PROJECT_ID</key>
+	<string>digital-health-app-a7157</string>
+	<key>STORAGE_BUCKET</key>
+	<string>digital-health-app-a7157.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1098428717556:ios:0f6a285f86c6ea998041a1</string>
+	<key>DATABASE_URL</key>
+	<string>https://digital-health-app-a7157-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
