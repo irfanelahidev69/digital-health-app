@@ -1,4 +1,4 @@
-package com.digital_health_app.digital_health_app
+package com.digitalhealth.app
 
 import io.flutter.embedding.android.FlutterActivity
 
