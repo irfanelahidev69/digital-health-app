@@ -162,10 +162,11 @@ class _SignupScreenState extends State<SignupScreen> with Validators {
                                     actions: [
                                       CupertinoDialogAction(
                                         child: Text(
-                                          Strings.goBackTo+Strings.login,
+                                          Strings.goBackTo + (Strings.login).toLowerCase(),
                                           style: context.titleSmall,
                                         ),
                                         onPressed: () {
+                                          Navigator.pop(context);
                                           Navigator.pop(context);
                                         },
                                       )
