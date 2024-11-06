@@ -16,7 +16,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextStyle? hintStyle;
   final int? maxLines;
   final bool? isSearch;
-  final bool? kPrimaryColor;
+  final Color? borderColor;
   final FocusNode? node;
   final Widget? suffixIcon;
   final Color? textColor;
@@ -25,24 +25,24 @@ class CustomTextFormField extends StatefulWidget {
 
   const CustomTextFormField(
       {this.errorText,
-        this.hintText,
-        this.node,
-        this.labelText,
-        this.inputType,
-        this.obscureText = false,
-        this.textEditingController,
-        this.textFieldValidator,
-        this.isEnabled = true,
-        this.isSearch,
-        this.kPrimaryColor,
-        this.hintStyle,
-        this.maxLines,
-        this.textColor,
-        super.key,
-        this.onSaved,
-        this.onChanged,
-        this.inputFormatters,
-        this.suffixIcon});
+      this.hintText,
+      this.node,
+      this.labelText,
+      this.inputType,
+      this.obscureText = false,
+      this.textEditingController,
+      this.textFieldValidator,
+      this.isEnabled = true,
+      this.isSearch,
+      this.borderColor,
+      this.hintStyle,
+      this.maxLines,
+      this.textColor,
+      super.key,
+      this.onSaved,
+      this.onChanged,
+      this.inputFormatters,
+      this.suffixIcon});
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -71,7 +71,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: widget.kPrimaryColor != null ? AppColors.kOrangeColor : AppColors.kDarkGreyColor,
+                  color: widget.borderColor ?? AppColors.kOrangeColor,
                 ),
               ),
               child: Padding(
