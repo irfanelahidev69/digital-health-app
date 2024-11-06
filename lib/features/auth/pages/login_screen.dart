@@ -1,6 +1,5 @@
 import 'package:digital_health_app/core/extensions/context.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:digital_health_app/features/auth/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/component/app_custom_buttons.dart';
@@ -109,8 +108,7 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 InkWell(
-                                  onTap: () {
-                                  },
+                                  onTap: () {},
                                   child: Text(
                                     "${Strings.forgotPassword}?",
                                     style: const TextStyle(fontWeight: FontWeight.bold),
@@ -121,8 +119,7 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
                           ),
                           AppButton(
                             isProcessing: false,
-                            onPressed: () async {
-                            },
+                            onPressed: () async {},
                             child: Text(
                               Strings.login,
                               style: context.labelLarge.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
@@ -132,7 +129,6 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
                       ),
                     ),
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -141,9 +137,7 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
                         style: context.bodyMedium.copyWith(color: AppColors.kTextLightGreyColor),
                       ),
                       InkWell(
-                        onTap: () {
-
-                        },
+                        onTap: () => context.push(const SignupScreen()),
                         child: Text(
                           Strings.createAccount,
                           style: context.bodyMedium.copyWith(fontWeight: FontWeight.bold),
@@ -171,7 +165,5 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
     );
   }
 
-  init()  {
-
-  }
+  init() {}
 }

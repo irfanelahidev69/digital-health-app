@@ -23,5 +23,6 @@ class Strings {
   static String success = "Success";
   static String notRegistered = "Not Registered?";
   static String forgotPassword = "Forgot Password";
+  static String goBackTo = "Go back to ";
 }
 
