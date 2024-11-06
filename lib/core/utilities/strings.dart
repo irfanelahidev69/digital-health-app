@@ -23,5 +23,11 @@ class Strings {
   static String notRegistered = "Not Registered?";
   static String forgotPassword = "Forgot Password";
   static String goBackTo = "Go back to ";
+  static String noInternetConnection = "Please check your internet connection and try again";
+  static String message = "Message";
+  static String ok = "OK";
+  static String userCreatedSuccessfully = "User Created Successfully";
+  static String thePasswordProvidedIsTooWeak = "The password provided is too weak";
+  static String theAccountAlreadyExistsForThatEmail = "The account already exists for that email";
 }
 

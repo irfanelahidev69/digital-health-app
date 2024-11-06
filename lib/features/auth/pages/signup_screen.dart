@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/component/app_custom_buttons.dart';
+import '../../../core/component/custom_dialog.dart';
 import '../../../core/component/custom_form_text_field.dart';
 import '../../../core/utilities/colors.dart';
 import '../../../core/utilities/strings.dart';
@@ -153,20 +154,70 @@ class _SignupScreenState extends State<SignupScreen> with Validators {
                             bloc: bloc,
                             listener: (context, state) {
                               if (state is SignupSuccessState) {
-
+                                context.showAppDialog(
+                                  CustomDialog(
+                                    height: 40,
+                                    content: Strings.message,
+                                    description: Strings.userCreatedSuccessfully,
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          Strings.goBackTo+Strings.login,
+                                          style: context.titleSmall,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                );
                               }
                               if (state is SignupFailureState) {
-
+                                context.showAppDialog(
+                                  CustomDialog(
+                                    height: 40,
+                                    content: Strings.error,
+                                    description: state.errorCode != null ? "${state.message}" : state.message,
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          Strings.ok,
+                                          style: context.titleSmall,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                );
                               }
                               if (state is SignupNoInternetState) {
-
+                                context.showAppDialog(
+                                  CustomDialog(
+                                    height: 40,
+                                    content: Strings.message,
+                                    description: Strings.noInternetConnection,
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          Strings.ok,
+                                          style: context.titleSmall,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
                               }
                             },
                             builder: (context, state) {
                               return AppButton(
                                 isProcessing: state is SignupLoadingState ? true : null,
-                                onPressed: ()  {
-
+                                onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     bloc.add(
                                       UserSignupEvent(
@@ -189,7 +240,6 @@ class _SignupScreenState extends State<SignupScreen> with Validators {
                       ),
                     ),
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -206,7 +256,6 @@ class _SignupScreenState extends State<SignupScreen> with Validators {
                       ),
                     ],
                   ),
-
                 ],
               ),
             ),
