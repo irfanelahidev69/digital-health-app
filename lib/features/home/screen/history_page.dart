@@ -40,81 +40,75 @@ class _HistoryPageState extends State<HistoryPage> {
           right: 20.0,
           top: 20.0,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                "History",
-                style: context.titleLarge.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Expanded(
-              child: BlocConsumer<CheckInBloc, CheckInState>(
-                bloc: checkInBloc,
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is CheckInLoading) {
-                    return const Center(
-                      child: SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: CircularProgressIndicator(
-                            color: AppColors.kOrangeColor,
-                          )),
-                    );
-                  } else if (state is CheckInUnsuccessful) {
-                    return Center(
-                      child: Text(
-                        state.message,
-                        style: context.titleMedium,
-                      ),
-                    );
-                  } else if (state is NoInternet) {
-                    return Center(
-                      child: Text(
-                        Strings.noInternetConnection,
-                        style: context.titleMedium,
-                      ),
-                    );
-                  }
+        child: Expanded(
+          child: RefreshIndicator(
+            color: AppColors.kOrangeColor,
+            onRefresh: () async {
+              checkInBloc.add(GetCheckInHistoryEvent());
+              await Future.value(true);
+            },
+            child: BlocConsumer<CheckInBloc, CheckInState>(
+              bloc: checkInBloc,
+              listener: (context, state) {},
+              builder: (context, state) {
+                if (state is CheckInLoading) {
+                  return const Center(
+                    child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator(
+                          color: AppColors.kOrangeColor,
+                        )),
+                  );
+                } else if (state is CheckInUnsuccessful) {
+                  return Center(
+                    child: Text(
+                      state.message,
+                      style: context.titleMedium,
+                    ),
+                  );
+                } else if (state is NoInternet) {
+                  return Center(
+                    child: Text(
+                      Strings.noInternetConnection,
+                      style: context.titleMedium,
+                    ),
+                  );
+                }
+                if (state is CheckInHistory) {
+                  return state.checkInList.isEmpty
+                      ? Center(
+                          child: Text(
+                            Strings.noRecordFound,
+                            style: context.titleMedium,
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: state.checkInList.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: CustomContainer(
+                                children: [
+                                  CustomListTile(
+                                    label: "Notes :",
+                                    value: state.checkInList[index].note ?? "",
+                                  ),
+                                  CustomListTile(
+                                    label: "Date & time :",
+                                    value: state.checkInList[index].checkInTime.toReadableDateTime(),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                }
 
-                  if (state is CheckInHistory) {
-                    return state.checkInList.isEmpty
-                        ? Center(
-                            child: Text(
-                              Strings.noRecordFound,
-                              style: context.titleMedium,
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: state.checkInList.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 20.0),
-                                child: CustomContainer(
-                                  children: [
-                                    CustomListTile(
-                                      labelFirst: "Date & time :",
-                                      valueFirst: state.checkInList[index].checkInTime.toReadableDateTime(),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                  }
-
-                  return const SizedBox();
-                },
-              ),
+                return const SizedBox();
+              },
             ),
-          ],
+          ),
         ),
       ),
     );
