@@ -1,10 +1,14 @@
+import 'package:digital_health_app/core/bloc/authentication/authentication_bloc.dart';
+import 'package:digital_health_app/core/extensions/context.dart';
 import 'package:digital_health_app/features/home/screen/history_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 import '../../../core/component/custom_navbar.dart';
 import '../../../core/utilities/colors.dart';
 import '../../../core/utilities/strings.dart';
+import '../../auth/pages/login_screen.dart';
 import 'check_in_page.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedHomeIndex = 0;
   final PageController _controller = PageController();
   final PageController homePageController = PageController();
+
+  late AuthenticationBloc authenticationBloc;
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
@@ -37,6 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
         title: (Strings.history),
       ),
     ];
+  }
+
+  @override
+  void initState() {
+    authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    super.initState();
   }
 
   @override
@@ -66,9 +78,39 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
-          title: const Text(
-            "Welcome",
+          title: Text(
+            selectIndex == 0 ? Strings.userCheckIn : Strings.history,
           ),
+          actions: [
+            BlocConsumer<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                if (state is AuthenticationUnauthenticated) {
+                  context.pushReplacement(const LoginScreen());
+                }
+              },
+              builder: (context, state) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: InkWell(
+                    onTap: () {
+                      authenticationBloc.add(LoggedOut());
+                    },
+                    child: state is AuthenticationLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: AppColors.kOrangeColor,
+                            ))
+                        : const Icon(
+                            Icons.exit_to_app,
+                            color: AppColors.kWhiteColor,
+                          ),
+                  ),
+                );
+              },
+            )
+          ],
         ),
         body: NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (overscroll) {
