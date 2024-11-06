@@ -42,4 +42,4 @@ This Flutter app enables users to log check-ins with notes and view their person
 
 ### Demo
 
-[![Watch the demo](https://img.youtube.com/vi/NfVbN1cVV4k/3.jpg)](https://drive.google.com/file/d/1v2gBlB6_PKy_XJ2gUOTRAcga6mQuay0N/view?usp=sharing)
+[![Watch the demo](https://img.youtube.com/vi/NfVbN1cVV4k/3.jpg)](https://drive.google.com/file/d/1Bw8_mkD_pddIAVA6YQzgyhZamI59cpOc/view?usp=sharing)
