@@ -10,3 +10,5 @@ final class UserCheckInEvent extends CheckInEvent {
     required this.note,
   });
 }
+
+final class GetCheckInHistoryEvent extends CheckInEvent {}

@@ -6,7 +6,10 @@ import 'package:digital_health_app/core/network/network_connection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../core/utilities/strings.dart';
+
 part 'check_in_event.dart';
+
 part 'check_in_state.dart';
 
 class CheckInBloc extends Bloc<CheckInEvent, CheckInState> {
@@ -33,10 +36,34 @@ class CheckInBloc extends Bloc<CheckInEvent, CheckInState> {
         if (response.success) {
           emit(CheckInSuccessful());
         } else {
-          emit(CheckInUnsuccessful());
+          emit(CheckInUnsuccessful(message: response.message));
         }
       } catch (e) {
-        emit(CheckInUnsuccessful());
+        emit(CheckInUnsuccessful(message: Strings.somethingWentWrong));
+      }
+    });
+    on<GetCheckInHistoryEvent>((event, emit) async {
+      try {
+        emit(CheckInLoading());
+        bool isConnection = await NetworkConnection().checkConnection();
+        if (!isConnection) {
+          emit(NoInternet());
+          return;
+        }
+        FireStoreResponse response = await fireStoreHandler.getDocumentWhere(collectionName: FireStoreHandler.CHECK_IN, query: auth.currentUser!.uid, field: FireStoreHandler.USER_id);
+
+        if (response.success) {
+          List<CheckInModel> checkInList = List<CheckInModel>.generate(
+            response.data!.length,
+            (index) => CheckInModel.fromJson(response.data![index].data()),
+          );
+
+          emit(CheckInHistory(checkInList: checkInList));
+        } else {
+          emit(CheckInUnsuccessful(message: response.message));
+        }
+      } catch (e) {
+        emit(CheckInUnsuccessful(message: Strings.somethingWentWrong));
       }
     });
   }
