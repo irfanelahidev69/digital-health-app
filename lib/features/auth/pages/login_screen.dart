@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/component/app_custom_buttons.dart';
 import '../../../core/component/custom_form_text_field.dart';
 import '../../../core/utilities/colors.dart';
 import '../../../core/utilities/strings.dart';
@@ -109,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
                               children: [
                                 InkWell(
                                   onTap: () {
-
                                   },
                                   child: Text(
                                     "${Strings.forgotPassword}?",
@@ -119,6 +119,15 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
                               ],
                             ),
                           ),
+                          AppButton(
+                            isProcessing: false,
+                            onPressed: () async {
+                            },
+                            child: Text(
+                              Strings.login,
+                              style: context.labelLarge.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
+                            ),
+                          )
                         ],
                       ),
                     ),
