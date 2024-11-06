@@ -253,7 +253,7 @@ class _OutlineButton extends StatelessWidget {
       child: OutlinedButton(
         style: ButtonStyle(
           side: borderColor == null
-              ? MaterialStateProperty.all(BorderSide(width: 1, color: Theme.of(context).scaffoldBackgroundColor))
+              ? MaterialStateProperty.all(BorderSide(width: 1, color: Theme.of(context).colorScheme.primary))
               : MaterialStateProperty.all(
                   BorderSide(width: 1, color: borderColor!),
                 ),
