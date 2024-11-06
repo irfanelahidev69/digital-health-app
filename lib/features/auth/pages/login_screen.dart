@@ -10,12 +10,13 @@ import '../../../core/component/custom_form_text_field.dart';
 import '../../../core/utilities/colors.dart';
 import '../../../core/utilities/strings.dart';
 import '../../../core/utilities/validators.dart';
+import '../../home/screen/home_screen.dart';
 import '../bloc/login_bloc/login_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -119,7 +120,9 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
                           BlocConsumer<LoginBloc, LoginState>(
                             bloc: bloc,
                             listener: (context, state) {
-                              if (state is LoginSuccessState) {}
+                              if (state is LoginSuccessState) {
+                                context.pushReplacement(const HomeScreen());
+                              }
                               if (state is LoginGetUserState) {}
                               if (state is LoginFailedState) {
                                 context.showAppDialog(
