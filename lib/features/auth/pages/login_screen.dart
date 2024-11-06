@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/bloc/authentication/authentication_bloc.dart';
 import '../../../core/component/app_custom_buttons.dart';
 import '../../../core/component/custom_dialog.dart';
 import '../../../core/component/custom_form_text_field.dart';
@@ -29,6 +30,12 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final LoginBloc bloc = LoginBloc();
+  late AuthenticationBloc authenticationBloc;
+  @override
+  void initState() {
+    authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +128,7 @@ class _LoginScreenState extends State<LoginScreen> with Validators {
                             bloc: bloc,
                             listener: (context, state) {
                               if (state is LoginSuccessState) {
+                                authenticationBloc.add(LoggedIn());
                                 context.pushReplacement(const HomeScreen());
                               }
                               if (state is LoginGetUserState) {}
