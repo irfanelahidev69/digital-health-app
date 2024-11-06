@@ -1,10 +1,10 @@
 class CheckInModel {
-  final String userId;
+  final String? userId;
   final DateTime checkInTime;
   final String? note;
 
   CheckInModel({
-    required this.userId,
+    this.userId,
     required this.checkInTime,
     this.note,
   });

@@ -7,6 +7,7 @@ class FireStoreHandler {
   late FirebaseFirestore _firestore;
 
   static const String USER = 'users';
+  static const String CHECK_IN = 'check_in';
 
   factory FireStoreHandler() {
     return _instance;

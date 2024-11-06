@@ -4,9 +4,9 @@ part of 'check_in_bloc.dart';
 sealed class CheckInEvent {}
 
 final class UserCheckInEvent extends CheckInEvent {
-  final CheckInModel checkIn;
+  final String note;
 
   UserCheckInEvent({
-    required this.checkIn,
+    required this.note,
   });
 }
