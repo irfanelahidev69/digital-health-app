@@ -10,7 +10,7 @@ class Strings {
   static String pleaseEnterAValidEmail = "Please enter a valid email";
   static String pleaseEnterAValidNumber = "Please enter a valid number";
   static String pleaseEnterAValidName = "Please enter a valid name";
-  static String bySigningIn = "By signing in, You agree to our";
+  static String bySigningIn = "By signing in, You agree to our term and conditions";
   static String error = "Error";
   static String back = "Back";
   static String email = "Email";
@@ -23,6 +23,5 @@ class Strings {
   static String success = "Success";
   static String notRegistered = "Not Registered?";
   static String forgotPassword = "Forgot Password";
-
 }
 
