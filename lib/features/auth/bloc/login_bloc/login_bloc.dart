@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/model/user.dart';
+import '../../../../core/network/network_connection.dart';
 
 
 part 'login_event.dart';
@@ -18,6 +19,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<UserLoginEvent>((event, emit) async {
       emit(LoginLoadingState());
       try {
+
+        bool isConnection = await NetworkConnection().checkConnection();
+        if (!isConnection) {
+          emit(NoInternetState());
+          return;
+        }
         UserCredential userCredential = await auth.signInWithEmailAndPassword(email: event.email, password: event.password);
 
         if (userCredential.user != null) {

@@ -4,6 +4,7 @@ import 'package:digital_health_app/core/model/firestore_response.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../core/model/user.dart';
+import '../../../../core/network/network_connection.dart';
 import '../../../../core/utilities/strings.dart';
 
 part 'signup_event.dart';
@@ -16,6 +17,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<UserSignupEvent>((event, emit) async {
       emit(SignupLoadingState());
       try {
+        bool isConnection = await NetworkConnection().checkConnection();
+        if (!isConnection) {
+          emit(SignupNoInternetState());
+          return;
+        }
         UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: event.email, password: event.password);
         if (userCredential.user != null) {
           UserModel user = UserModel(email: event.email, name: event.name, id: userCredential.user!.uid);
