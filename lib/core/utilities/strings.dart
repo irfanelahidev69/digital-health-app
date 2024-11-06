@@ -14,8 +14,7 @@ class Strings {
   static String error = "Error";
   static String back = "Back";
   static String email = "Email";
-  static String firstName = "First Name";
-  static String lastName = "Last Name";
+  static String name = "Name";
   static String signUp = "Sign Up";
   static String invalidConfirmPassword = "Confirm Password is invalid";
   static String confirmPasswordNotMatch = "Password does not match";

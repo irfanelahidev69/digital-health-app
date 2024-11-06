@@ -23,8 +23,7 @@ class _SignupScreenState extends State<SignupScreen> with Validators {
   bool isVisible = true;
   bool visible = true;
 
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
@@ -60,28 +59,12 @@ class _SignupScreenState extends State<SignupScreen> with Validators {
                       child: Column(
                         children: [
                           CustomTextFormField(
-                            hintText: Strings.firstName,
-                            textEditingController: firstNameController,
+                            hintText: Strings.name,
+                            textEditingController: nameController,
                             errorText: Strings.pleaseEnterAValidName,
                             textFieldValidator: (value) {
                               if (!validateName(
-                                firstNameController.text.trim(),
-                              )) {
-                                return '';
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          CustomTextFormField(
-                            hintText: Strings.lastName,
-                            textEditingController: lastNameController,
-                            errorText: Strings.pleaseEnterAValidName,
-                            textFieldValidator: (value) {
-                              if (!validateName(
-                                lastNameController.text.trim(),
+                                nameController.text.trim(),
                               )) {
                                 return '';
                               }
