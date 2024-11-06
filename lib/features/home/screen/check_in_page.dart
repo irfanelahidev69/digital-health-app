@@ -1,6 +1,8 @@
 import 'package:digital_health_app/core/component/coutom_switch.dart';
 import 'package:digital_health_app/core/extensions/context.dart';
+import 'package:digital_health_app/features/home/bloc/check_in_bloc/check_in_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/component/app_custom_buttons.dart';
 import '../../../core/component/custom_form_text_field.dart';
@@ -17,9 +19,9 @@ class CheckInPage extends StatefulWidget {
 }
 
 class _CheckInPageState extends State<CheckInPage> {
-  final TextEditingController nameController = TextEditingController();
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final TextEditingController noteController = TextEditingController();
   bool isSwitchOn = false;
+  final CheckInBloc checkInBloc = CheckInBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class _CheckInPageState extends State<CheckInPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "User Check In",
+            Strings.userCheckIn,
             style: context.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 20,
@@ -63,19 +65,9 @@ class _CheckInPageState extends State<CheckInPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Form(
-                  key: _key,
-                  child: CustomTextFormField(
-                    hintText: Strings.enterNote,
-                    textEditingController: nameController,
-                    errorText: Strings.pleaseEnterAValidNumber,
-                    textFieldValidator: (value) {
-                      if (nameController.text.trim().isEmpty) {
-                        return '';
-                      }
-                      return null;
-                    },
-                  ),
+                CustomTextFormField(
+                  hintText: Strings.enterNote,
+                  textEditingController: noteController,
                 ),
                 const SizedBox(
                   height: 15,
@@ -83,14 +75,34 @@ class _CheckInPageState extends State<CheckInPage> {
               ],
             ),
           ),
-          AppButton.outline(
-            isProcessing: false,
-            onPressed: isSwitchOn ? () {} : null,
-            borderColor: isSwitchOn ? AppColors.kOrangeColor : AppColors.kGreyColor,
-            child: Text(
-              Strings.submit,
-              style: context.labelLarge.copyWith(fontWeight: FontWeight.w600, color: isSwitchOn ? AppColors.kOrangeColor : AppColors.kGreyColor),
-            ),
+          BlocConsumer<CheckInBloc, CheckInState>(
+            bloc: checkInBloc,
+            listener: (context, state) {
+              if (state is CheckInSuccessful) {
+                context.showToast(Strings.checkInSuccessful);
+              } else if (state is CheckInUnsuccessful) {
+                context.showToast(Strings.unableToCheckIn);
+              } else if (state is NoInternet) {
+                context.showToast(Strings.noInternetConnection);
+              }
+            },
+            builder: (context, state) {
+              return AppButton.outline(
+                isProcessing: state is CheckInLoading,
+                onPressed: isSwitchOn
+                    ? () {
+                        checkInBloc.add(UserCheckInEvent(
+                          note: noteController.text.trim(),
+                        ));
+                      }
+                    : null,
+                borderColor: isSwitchOn ? AppColors.kOrangeColor : AppColors.kGreyColor,
+                child: Text(
+                  Strings.submit,
+                  style: context.labelLarge.copyWith(fontWeight: FontWeight.w600, color: isSwitchOn ? AppColors.kOrangeColor : AppColors.kGreyColor),
+                ),
+              );
+            },
           ),
         ],
       ),
