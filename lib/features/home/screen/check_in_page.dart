@@ -22,6 +22,7 @@ class _CheckInPageState extends State<CheckInPage> {
   final TextEditingController noteController = TextEditingController();
   bool isSwitchOn = false;
   final CheckInBloc checkInBloc = CheckInBloc();
+  final GlobalKey<FormState> key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +31,9 @@ class _CheckInPageState extends State<CheckInPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            Strings.userCheckIn,
-            style: context.labelLarge.copyWith(
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-            ),
-          ),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
@@ -49,7 +43,7 @@ class _CheckInPageState extends State<CheckInPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      Strings.checkIn,
+                      Strings.gambledToday,
                       style: context.titleMedium,
                     ),
                     CustomSwitch(
@@ -65,9 +59,22 @@ class _CheckInPageState extends State<CheckInPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                CustomTextFormField(
-                  hintText: Strings.enterNote,
-                  textEditingController: noteController,
+                Form(
+                  key: key,
+                  child: CustomTextFormField(
+                    isEnabled: isSwitchOn,
+                    hintText: Strings.enterNote,
+                    textEditingController: noteController,
+                    maxLines: 4,
+                    borderColor: isSwitchOn ? AppColors.kOrangeColor : AppColors.kGreyColor,
+                    errorText: Strings.pleaseEnterANote,
+                    textFieldValidator: (value) {
+                      if (noteController.text.isEmpty) {
+                        return '';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -79,6 +86,7 @@ class _CheckInPageState extends State<CheckInPage> {
             bloc: checkInBloc,
             listener: (context, state) {
               if (state is CheckInSuccessful) {
+                noteController.clear();
                 context.showToast(Strings.checkInSuccessful);
               } else if (state is CheckInUnsuccessful) {
                 context.showToast(Strings.unableToCheckIn);
@@ -91,9 +99,11 @@ class _CheckInPageState extends State<CheckInPage> {
                 isProcessing: state is CheckInLoading,
                 onPressed: isSwitchOn
                     ? () {
-                        checkInBloc.add(UserCheckInEvent(
-                          note: noteController.text.trim(),
-                        ));
+                        if (key.currentState!.validate()) {
+                          checkInBloc.add(UserCheckInEvent(
+                            note: noteController.text.trim(),
+                          ));
+                        }
                       }
                     : null,
                 borderColor: isSwitchOn ? AppColors.kOrangeColor : AppColors.kGreyColor,
