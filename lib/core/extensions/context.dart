@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 extension ContextExtension on BuildContext {
@@ -73,6 +74,17 @@ extension ContextExtension on BuildContext {
       CupertinoPageRoute(
         builder: (_) => screen,
       ),
+    );
+  }
+
+  void showToast(String message, {ToastGravity? gravity}) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: gravity ?? ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      textColor: onPrimary,
+      fontSize: 14.0,
     );
   }
 }
