@@ -1,15 +1,17 @@
 import 'package:digital_health_app/core/extensions/context.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/component/app_custom_buttons.dart';
 import '../../../core/component/custom_form_text_field.dart';
 import '../../../core/utilities/colors.dart';
 import '../../../core/utilities/strings.dart';
 import '../../../core/utilities/validators.dart';
+import '../bloc/signup_bloc/signup_bloc.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -28,6 +30,7 @@ class _SignupScreenState extends State<SignupScreen> with Validators {
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
   final TextEditingController accountsController = TextEditingController();
+  final SignupBloc bloc = SignupBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -146,14 +149,42 @@ class _SignupScreenState extends State<SignupScreen> with Validators {
                           const SizedBox(
                             height: 30,
                           ),
-                          AppButton(
-                            isProcessing: false,
-                            onPressed: () async {},
-                            child: Text(
-                              Strings.signUp,
-                              style: context.labelLarge.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
-                            ),
-                          )
+                          BlocConsumer<SignupBloc, SignupState>(
+                            bloc: bloc,
+                            listener: (context, state) {
+                              if (state is SignupSuccessState) {
+
+                              }
+                              if (state is SignupFailureState) {
+
+                              }
+                              if (state is SignupNoInternetState) {
+
+                              }
+                            },
+                            builder: (context, state) {
+                              return AppButton(
+                                isProcessing: state is SignupLoadingState ? true : null,
+                                onPressed: ()  {
+
+                                  if (_formKey.currentState!.validate()) {
+                                    bloc.add(
+                                      UserSignupEvent(
+                                        name: nameController.text.trim(),
+                                        email: emailController.text.trim(),
+                                        password: passController.text.trim(),
+                                        confirmPassword: confirmPassController.text.trim(),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Text(
+                                  Strings.signUp,
+                                  style: context.labelLarge.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ),
