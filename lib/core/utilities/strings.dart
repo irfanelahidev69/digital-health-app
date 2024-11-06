@@ -29,5 +29,18 @@ class Strings {
   static String userCreatedSuccessfully = "User Created Successfully";
   static String thePasswordProvidedIsTooWeak = "The password provided is too weak";
   static String theAccountAlreadyExistsForThatEmail = "The account already exists for that email";
+  static String retry = "Retry";
+  static String home = "Home";
+  static String history = "History";
+  static String submit = "Submit";
+  static String enterNote = "Enter Note";
+  static String checkIn = "Check In";
+  static String unableToCheckIn = "Unable to check in";
+  static String checkInSuccessful = "Check in successful";
+  static String userCheckIn = "User Check In";
+  static String noRecordFound = "No record found";
+  static String gambledToday = "Gambled Today";
+  static String pleaseEnterANote = "Please enter a note";
+
 }
 
